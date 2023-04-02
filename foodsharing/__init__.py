@@ -71,8 +71,6 @@ def get_own_pickups() -> Any:
         p = Path(f"~/Downloads/Foodsharing-Abholung-{begin.format('ddd-DD.MM')}.ics").expanduser()
         p.write_text(cal.serialize())
         print(f"Wrote ics file to {p}")
-    else:
-        print("No pickups")
 
 
 def main():

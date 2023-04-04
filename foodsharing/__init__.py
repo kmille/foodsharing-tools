@@ -56,7 +56,8 @@ def get_own_pickups() -> Any:
     pickups = resp.json()
     for pickup in pickups:
         begin = arrow.get(pickup['date'])
-        name = f"Foodsharing: {pickup['store']['name']}"
+        store = pickup['store']['name']
+        name = f"Foodsharing: {store}"
         alarm1 = DisplayAlarm(display_text=name,
                               trigger=begin.shift(hours=-1))
         alarm2 = DisplayAlarm(display_text=name,
@@ -68,7 +69,7 @@ def get_own_pickups() -> Any:
         e.end = begin.shift(hours=+2)
         e.alarms = (alarm1, alarm2)
         cal.events.add(e)
-        p = Path(f"~/Downloads/Foodsharing-Abholung-{begin.format('ddd-DD.MM')}.ics").expanduser()
+        p = Path(f"~/Downloads/Foodsharing-Abholung-{store}{begin.format('ddd-DD.MM')}.ics").expanduser()
         p.write_text(cal.serialize())
         print(f"Wrote ics file to {p}")
 
